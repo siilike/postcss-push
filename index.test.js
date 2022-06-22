@@ -11,11 +11,15 @@ async function run (input, output, opts = {})
 
 it('works', async () =>
 {
-	await run('#b { font-size: 25px; }', `#b { font-size: 25px; }\n\n\n#a { font-size: 25px; }`,
+	await run('#b { font-size: 25px; }', `#a { font-size: 20px; }\n#b { font-size: 25px; }\n#c { font-size: 30px; }`,
 	{
-		files:
+		append:
 		[
-			'test.css',
+			'test-append.css',
+		],
+		prepend:
+		[
+			'test-prepend.css',
 		]
 	})
 })

@@ -8,15 +8,28 @@ module.exports = (opts = {}) =>
 
 		Once(styles, { result })
 		{
-			(opts.files || []).forEach(a =>
+			(opts.prepend || []).forEach(a =>
 			{
 				result.messages.push(
-				{
-					type: "dependency",
-					plugin: "postcss-push",
-					file: a,
-					parent: '__' + a,
-				})
+					{
+						type: "dependency",
+						plugin: "postcss-push",
+						file: a,
+						parent: '__' + a,
+					})
+
+				styles.prepend(fs.readFileSync(a)+"\n\n")
+			});
+
+			(opts.append || []).forEach(a =>
+			{
+				result.messages.push(
+					{
+						type: "dependency",
+						plugin: "postcss-push",
+						file: a,
+						parent: '__' + a,
+					})
 
 				styles.append("\n\n"+fs.readFileSync(a))
 			})
